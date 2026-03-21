@@ -38,7 +38,7 @@ making it suitable for both offline benchmarking and continuous testing during m
 In summary, this algorithm provides an effective and rigorous benchmark for assessing a fundamental capability—mathematical precision—while balancing experimental control,
 scalability, and realistic difficulty.
 
-Click [here]() to access the full study.
+Click [here](https://zenodo.org/records/19146927) to access the full study.
 
 ## Installation
 
