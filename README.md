@@ -1,6 +1,6 @@
 Benchmarking algorithm for testing language model mathematical precision.
 
-# math_precision
+# Math Precision
 
 The presented algorithm implements a benchmarking method designed to evaluate the **mathematical precision** of language models,
 targeting a well-known limitation of these systems: their ability to reliably perform numerical reasoning under high precision constraints.
@@ -37,3 +37,235 @@ making it suitable for both offline benchmarking and continuous testing during m
 
 In summary, this algorithm provides an effective and rigorous benchmark for assessing a fundamental capability—mathematical precision—while balancing experimental control,
 scalability, and realistic difficulty.
+
+Click [here]() to access the full study.
+
+## Installation
+
+Use the package manager [pip](https://pypi.org/project/math-precision/) to install Math Precision.
+
+```bash
+pip install math-precision
+```
+
+## Usage
+Basic usage example:
+```python
+from math_precision import MathPrecision
+math_precision = MathPrecision()
+
+return_dictionary = math_precision.generateDatabase(n_samples=2)
+print('-'*150)
+for data in return_dictionary['data']:
+	print('INPUT:')
+	print(data['input'])
+	print()
+	print('OUPUT:')
+	print(data['output'])
+	print('-'*150)
+
+```
+```bash
+------------------------------------------------------------------------------------------------------------------------------------------------------
+INPUT:
+184.0063643275093100415 * 146.8151047498312212 * 138.8551993852482277 = ?
+
+A) 3751163.0160071049
+B) 3751160.1584154619
+C) 3751161.2217151900
+D) 3751162.6599317500
+
+OUPUT:
+C) 3751161.2217151900
+------------------------------------------------------------------------------------------------------------------------------------------------------
+INPUT:
+141.48192758927593715 - 121.5571476949588019 * 105.07194449129752223 = ?
+
+A) -12631.4109324723
+B) -12630.7639475359
+C) -12631.1210135152
+D) -12630.2056923145
+
+OUPUT:
+B) -12630.7639475359
+------------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+## MathPrecision
+
+```python
+from math_precision import MathPrecision # import of the main class for accessing the module's resources
+math_precision = MathPrecision( # construction of the main class of the module
+	show_errors=True, # if True, displays a summarized error message when an error occurs; if False, does not display any error message (default value: True)
+	display_error_point=False # if True, displays the error details when "show_errors" is enabled; if False, does not display the error details (default value: False)
+) # returns the instantiation of the class object
+if math_precision: print('Math Precision class SUCCESSFULLY created!')
+else: print('ERROR creating the Math Precision class.')
+
+```
+```bash
+Math Precision class SUCCESSFULLY created!
+```
+```python
+from math_precision import MathPrecision
+math_precision = MathPrecision()
+
+if math_precision: print('Math Precision class SUCCESSFULLY created!')
+else: print('ERROR creating the Math Precision class.')
+
+```
+```bash
+Math Precision class SUCCESSFULLY created!
+```
+
+## generateDatabase
+
+```python
+from math_precision import MathPrecision
+math_precision = MathPrecision()
+
+return_dictionary = math_precision.generateDatabase( # creates a dataset with pairs of multiple-choice questions and their respective correct answers
+	n_samples=5 # integer number indicating the desired number of questions-answers pairs (default value: 10)
+) # returns a dictionary with the number of input/output pairs defined in the "n_samples" parameter
+# the returned dictionary will have a key named "data" with a list of dictionaries containing the keys "input" and "output"
+# the "input" key, with a string value, will contain the text with the question with the answer choices (in english)
+# the "output" key, with a string value, will contain the answer with the correct option
+
+# each question will contain a random mathematical operation, involving three high-precision numbers generated randomly and multiple-choice options, with three of them containing random values close to the correct answer and only one of them being the true result
+
+# the correct alternative will be in a random option among the alternatives a, b, c, or d
+# there is no limit to the number of samples to be generated (all of them will be generated randomly)
+# the tested language model must not contain the samples generated in its training or fine-tuning data for the test to be reliable
+print('-'*150)
+for data in return_dictionary['data']:
+	print('INPUT:')
+	print(data['input'])
+	print()
+	print('OUPUT:')
+	print(data['output'])
+	print('-'*150)
+
+```
+```basg
+------------------------------------------------------------------------------------------------------------------------------------------------------
+INPUT:
+191.03304741701928493 * 162.2707451839491237 + 103.46881234297437 = ?
+
+A) 31100.6476049915
+B) 31102.5437714634
+C) 31104.1943681467
+D) 31101.2392374297
+
+OUPUT:
+B) 31102.5437714634
+------------------------------------------------------------------------------------------------------------------------------------------------------
+INPUT:
+200.07303954696120774 - 149.8218782281917576 / 104.08032375453545115 = ?
+
+A) 197.8092583835
+B) 200.1882278136
+C) 197.7932807057
+D) 198.6335563399
+
+OUPUT:
+D) 198.6335563399
+------------------------------------------------------------------------------------------------------------------------------------------------------
+INPUT:
+194.07305115389703665 - 135.5834057667249408 + 101.1301626879394161 = ?
+
+A) 159.4972047393
+B) 159.6198080751
+C) 158.5871683032
+D) 158.9372221475
+
+OUPUT:
+B) 159.6198080751
+------------------------------------------------------------------------------------------------------------------------------------------------------
+INPUT:
+186.23072473885633382 * 167.15273344514131415 / 111.8784004428909785 = ?
+
+A) 278.2393613811
+B) 278.6247389190
+C) 276.8519367479
+D) 278.9284469969
+
+OUPUT:
+A) 278.2393613811
+------------------------------------------------------------------------------------------------------------------------------------------------------
+INPUT:
+194.8056931355150985 - 132.8088206774728769 * 117.8409755399436177 = ?
+
+A) -15455.5152958073
+B) -15455.3081483387
+C) -15453.9183879870
+D) -15455.0540602446
+
+OUPUT:
+A) -15455.5152958073
+------------------------------------------------------------------------------------------------------------------------------------------------------
+```
+```python
+from math_precision import MathPrecision
+math_precision = MathPrecision()
+
+return_dictionary = math_precision.generateDatabase(5)
+print(return_dictionary)
+
+```
+```bash
+{'data': [{'output': 'C) 32513.8116088101', 'input': '196.11796558077798291 * 166.6085894052722163 - 161.12599363506649286 = ?\n\nA) 32513.0219358279\nB) 32512.7676315500\nC) 32513.8116088101\nD) 32513.0431668441'}, {'output': 'C) 172.8028062688', 'input': '174.2891054463348314 - 167.2523364109937133 / 112.5293877196814629 = ?\n\nA) 171.5368280844\nB) 174.5571941103\nC) 172.8028062688\nD) 171.3417082972'}, {'output': 'C) 263.5210549156', 'input': '181.5323951730367101 * 167.23477616080511043 / 115.2034302626197141 = ?\n\nA) 265.1937080077\nB) 264.5295255691\nC) 263.5210549156\nD) 262.1750573407'}, {'output': 'D) 117.5276987906', 'input': '198.7392128311829663 / 134.9416871735421143 + 116.05492031129031061 = ?\n\nA) 118.7548606947\nB) 119.0718582488\nC) 117.7828173070\nD) 117.5276987906'}, {'output': 'A) 461.9906233447', 'input': '197.5221593791971236 + 141.3444099399878289 + 123.12405402549522837 = ?\n\nA) 461.9906233447\nB) 460.7348349593\nC) 462.5886377595\nD) 460.1676709178'}]}
+```
+```python
+from math_precision import MathPrecision
+math_precision = MathPrecision()
+
+n_samples = 100
+return_dictionary = math_precision.generateDatabase(n_samples)
+print('main key:', list(return_dictionary.keys()))
+print('keys of pairs:', list(return_dictionary['data'][0].keys()))
+print('generated pairs:', len(return_dictionary['data']))
+
+```
+```bash
+main key: ['data']
+keys of pairs: ['output', 'input']
+generated pairs: 100
+```
+
+## Saving the dataset to a JSON file.
+
+```python
+from math_precision import MathPrecision
+math_precision = MathPrecision()
+
+def save_dictionary_to_json(return_dictionary={}, file_path=''):
+	from json import dump
+	from os.path import exists
+	with open(file_path, 'w', encoding='utf-8') as file: dump(return_dictionary, file, ensure_ascii=False, indent=4)
+	return exists(file_path)
+
+n_samples = 1000
+file_path = f'./{n_samples}_samples.json'
+return_dictionary = math_precision.generateDatabase(n_samples)
+saved_json = save_dictionary_to_json(return_dictionary=return_dictionary, file_path=file_path)
+if saved_json: print(f'File "{file_path}" saved SUCCESSFULLY!')
+else: print('ERROR saving the JSON file.')
+
+```
+```bash
+File "./1000_samples.json" saved SUCCESSFULLY!
+```
+
+Copyright [2026] [Sapiens Technology®️]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
