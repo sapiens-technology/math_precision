@@ -1,0 +1,131 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm, mathrsfs, mathtools}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{cite}
+\usepackage{xcolor}
+
+\geometry{a4paper, margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=red,
+}
+
+% Theorem Styles
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+% Custom Names for required structure
+\renewcommand{\abstractname}{Abstract}
+\newpage
+\renewcommand{\contentsname}{Table of Contents}
+
+\title{\textbf{Math Precision -- Benchmarking}\\
+\Large A Formal Framework for High-Precision Arithmetic Benchmarking in Large Language Models}
+\author{Sapiens Technology\textregistered}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The rigorous evaluation of mathematical precision in Large Language Models (LLMs) remains an open challenge, often obfuscated by the models' proficiency in probabilistic pattern recognition over strict deterministic reasoning. This paper introduces the theoretical formalization of the \textbf{Math Precision -- Benchmarking} algorithm, an automated, stochastic data generation framework authored by Sapiens Technology\textregistered. Operating strictly within the topological ring of arbitrary-precision decimal floating-point numbers ($\mathbb{F}_{100}$), the proposed mechanism synthesizes mathematically complex evaluation manifolds. By enforcing an order-statistic operand constraint and applying adversarial topological perturbations to construct an $\varepsilon$-neighborhood of plausible incorrect alternatives, the algorithm fundamentally mitigates heuristic guessing and memorization. We provide a doctoral-level mathematical mapping of the algorithmic logic, corroborating its architectural necessity against contemporary vulnerabilities observed in state-of-the-art computational linguistic models.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+While Large Language Models (LLMs) have achieved near-saturation capabilities across numerous natural language benchmarks, their innate capacity to execute rigorous, high-precision arithmetic operations remains demonstrably deficient \cite{hendrycks2021}. As explicitly demonstrated by Yuan et al. (2023) \cite{yuan2023}, LLMs function primarily as probabilistic text generation engines; consequently, they inherently lack deterministic calculation manifolds, often producing hallucinatory approximations when confronted with high-precision numerical reasoning.
+
+The standard methodologies for evaluating arithmetic reasoning typically rely on static corpora that are susceptible to data contamination and over-fitting during the pre-training phase. Furthermore, Kim et al. (2025) \cite{kim2025} elucidated that mathematical reasoning in language models is heavily reliant on the numerical scales utilized during evaluation. When computational complexity is escalated by systematically perturbing numerical values, out-of-distribution reasoning collapse is observed, culminating in a significant spike in logical and arithmetic error rates \cite{kim2025}.
+
+To address these empirical limitations, Sapiens Technology\textregistered \ introduces the \textbf{Math Precision -- Benchmarking} algorithm. This paper establishes the rigorous mathematical foundation of the algorithm, mapping its computationally synthetic mechanisms into a formal abstract algebraic and topological framework. 
+
+\section{Topological and Algebraic Foundations}
+
+The core architecture of the benchmarking generation operates on a measurable probability space $(\Omega, \mathcal{F}, \mathbb{P})$, leveraging cryptographically secure pseudorandomness to instantiate evaluations completely devoid of determinism. 
+
+\subsection{The High-Precision Operand Field}
+Let $\mathbb{F}_{\wp}$ denote the field of decimal floating-point representations constructed with a strict precision threshold of $\wp \in \mathbb{N}$ significant digits. In the proposed paradigm, the environment is constrained to $\wp = 100$.
+
+\begin{definition}[Stochastic Operand Generation]
+Let $X: \Omega \to \mathbb{F}_{100}$ be a Lebesgue-measurable stochastic variable denoting a high-precision operand. The generation is defined as a bipartite summation:
+\begin{equation}
+X(\omega) \triangleq \lfloor U_Z(\omega) \rfloor + U_D(\omega)
+\end{equation}
+where $U_Z \sim \mathcal{U}(\{100, 101, \dots, 200\})$ is a discrete uniform random variable over a bounded integer lattice $\Lambda \subset \mathbb{Z}$, and $U_D \sim \mathcal{U}(0, 1)$ is a standard continuous uniform variable, cast into $\mathbb{F}_{100}$ via decimal homeomorphism. 
+\end{definition}
+
+\subsection{Order Statistics and Sequence Monotonicity}
+To systematically constrain structural variance and bypass trivial commutative equivalences, an order-statistic mapping is enforced upon the sampled operands. 
+
+\begin{lemma}[Monotonic Sequence Constraint]
+Let $\{X_1, X_2, X_3\}$ be a sequence of independent and identically distributed random variables drawn from $X$. There exists a permutation operator $\pi \in S_3$ that yields the order statistics $(X_{(1)}, X_{(2)}, X_{(3)})$ such that the sequence strictly satisfies the monotonically non-increasing property:
+\begin{equation}
+X_{(1)} \ge X_{(2)} \ge X_{(3)}
+\end{equation}
+\end{lemma}
+The algorithm applies this $\pi$ transformation natively to the dynamically generated numerical trio to guarantee a structured distribution of operand magnitudes prior to operational synthesis.
+
+\subsection{Abstract Syntax Tree Morphism}
+Let $\mathcal{O} \triangleq \{+, -, \times, \div\}$ represent the finite set of permissible binary arithmetic operators. The algorithm uniformly samples a sequence of two operators $\vec{o} = (o_1, o_2) \in \mathcal{O}^2$.
+
+The exact ground truth evaluation is formalized as an Abstract Syntax Tree (AST) morphism $\Phi: \mathbb{F}_{100}^3 \times \mathcal{O}^2 \to \mathbb{F}_{100}$, which rigorously enforces classical algebraic operator precedence (e.g., multiplication over addition). 
+The exact target solution $y^*$ is derived as:
+\begin{equation}
+y^* \triangleq \Phi(X_{(1)}, X_{(2)}, X_{(3)}, o_1, o_2)
+\end{equation}
+To restrict the output domain for verifiable evaluation, a truncation endomorphism $\mathcal{T}_{10}: \mathbb{F}_{100} \to \mathbb{F}_{10}$ is applied, strictly formatting the solution to $10$ decimal places: $y^*_{fmt} = \mathcal{T}_{10}(y^*)$.
+
+\section{Adversarial Perturbation Manifold}
+
+The distinction between true arithmetic reasoning and superficial heuristic pattern matching necessitates an evaluation environment where distractors are statistically indistinguishable from the target without deterministic evaluation.
+
+\begin{definition}[Negative Sample Perturbation]
+To construct the multiple-choice space $\mathcal{A}$ where $|\mathcal{A}| = 4$, the algorithm synthesizes an $\varepsilon$-neighborhood of false answers. For each adversarial alternative $y_k$, a stochastic perturbation $\delta_k = Z_\delta + D_\delta$ is generated, where $Z_\delta \sim \mathcal{U}(\{0, 1\})$. The perturbation is applied via an operator $o_k \sim \mathcal{U}(\{+, -\})$ yielding:
+\begin{equation}
+y_k = \mathcal{T}_{10}(y^* \ o_k \ \delta_k)
+\end{equation}
+\end{definition}
+
+To ensure cardinality non-collapse (uniqueness) within the choice set, a quotient set mapping constraint is applied: if $y_k \in \Sigma = \{y^*_{fmt}\} \cup \{y_1, \dots, y_{k-1}\}$, the stochastic sequence is rejected and re-sampled until the Lebesgue measure of the intersection of identical choices is strictly zero. 
+
+\subsection{Lexicographical Bijective Mapping}
+Finally, the set of alternatives $\Sigma$ is mapped to lexicographical markers $\mathcal{L} = \{A, B, C, D\}$. The algorithm defines a random bijective mapping $\mu: \Sigma \to \mathcal{L}$ instantiated via a uniformly sampled symmetric permutation from $S_4$. This completely obfuscates the positional encoding of $y^*_{fmt}$, neutralizing inductive positional biases often leveraged by LLMs \cite{cobbe2021}.
+
+\section{Computational Robustness and Fault Tolerance}
+In accordance with production-grade engineering constraints, the object mapping $\mathscr{C}_{MathPrecision}$ encapsulates the execution pipeline within a fault-tolerant manifold. It neutralizes unhandled system state leakages via a global suppression of exogenous Python warnings and strictly isolates stochastic failures, ensuring the Lebesgue integrability of the output pipeline without arbitrary execution halting.
+
+\section{Conclusion}
+
+The \textbf{Math Precision -- Benchmarking} algorithm engineered by Sapiens Technology\textregistered \ presents an impenetrable theoretical and practical challenge for contemporary language models. By embedding computational demands within an arbitrary-precision topology and utilizing dynamic combinatorial order statistics to construct adversarial perturbations, it actively thwarts approximation heuristics. This framework offers a paradigm shift from static evaluations, establishing a mathematically elegant, infinitely scalable, and statistically rigid benchmarking environment capable of definitively quantifying authentic numerical competence.
+
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{kim2025}
+Kim, M., Shrestha, S., et al. (2025). \textit{Mathematical Reasoning in Large Language Models: Assessing Logical and Arithmetic Errors across Wide Numerical Ranges}. arXiv preprint arXiv:2502.08680.
+
+\bibitem{yuan2023}
+Yuan, Z., et al. (2023). \textit{How Well Do Large Language Models Perform in Arithmetic Tasks?}. arXiv preprint arXiv:2304.05302.
+
+\bibitem{hendrycks2021}
+Hendrycks, D., Burns, C., Kadavath, S., Arora, A., Basart, S., Tang, E., Song, D., \& Steinhardt, J. (2021). \textit{Measuring Mathematical Problem Solving With the MATH Dataset}. Advances in Neural Information Processing Systems, 34.
+
+\bibitem{cobbe2021}
+Cobbe, K., Kosaraju, V., Bavarian, M., Chen, M., Jun, H., Kaiser, L., Plappert, M., Tworek, J., Hilton, J., Nakano, R., Hesse, C., \& Schulman, J. (2021). \textit{Training Verifiers to Solve Math Word Problems}. arXiv preprint arXiv:2110.14168.
+
+\end{thebibliography}
+
+\end{document}
