@@ -1,6 +1,6 @@
 Benchmarking algorithm for testing language model mathematical precision.
 
-# Math Precision
+# Math Precision – Benchmarking
 
 The presented algorithm implements a benchmarking method designed to evaluate the **mathematical precision** of language models,
 targeting a well-known limitation of these systems: their ability to reliably perform numerical reasoning under high precision constraints.
